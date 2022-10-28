@@ -13,7 +13,9 @@ const logger = createLogger('TodosAccess')
 // TODO: Implement the dataLayer logic
 export class TodosAccess {
   constructor(
-    private readonly docClient: DocumentClient = CreateDynamoDbClient(),
+    // CreateDynamoDbClient function was wraping DynamoDB with xry
+    // private readonly docClient: DocumentClient = CreateDynamoDbClient(),
+    private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
     private readonly todoTable = process.env.TODOS_TABLE
   ) {}
 
@@ -102,6 +104,8 @@ export class TodosAccess {
     return 'Todo Deleted' as string
   }
 }
-function CreateDynamoDbClient() {
-  return new XAWS.DynamoDB.DocumentClient()
-}
+
+// This function was intended to wrap XAWS to DynamoDB
+// function CreateDynamoDbClient() {
+//   return new XAWS.DynamoDB.DocumentClient()
+// }
